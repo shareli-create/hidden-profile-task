@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Sessions
+    match /sessions/{sessionId} {
+      allow read, write: if true; // In production, add proper authentication
+    }
+    
+    // Participants
+    match /participants/{participantId} {
+      allow read, write: if true;
+    }
+    
+    // Groups
+    match /groups/{groupId} {
+      allow read, write: if true;
+    }
+    
+    // Decisions
+    match /decisions/{decisionId} {
+      allow read, write: if true;
+    }
+  }
+}
