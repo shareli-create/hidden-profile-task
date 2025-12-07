@@ -322,7 +322,7 @@ const SessionAnalysis = () => {
                       </td>
                       <td className="p-3 text-center">
                         <span className={`px-3 py-1 rounded font-semibold ${
-                          analysis.bias > 0 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                          analysis.bias > 0.3 ? 'bg-yellow-100 text-yellow-700' : analysis.bias < -0.3 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
                         }`}>
                           {analysis.bias > 0 ? '+' : ''}{analysis.bias.toFixed(2)}
                         </span>
@@ -334,8 +334,10 @@ const SessionAnalysis = () => {
             </div>
             <div className="mt-4 p-4 bg-yellow-50 rounded border border-yellow-200">
               <p className="text-sm">
-                <strong>הסבר:</strong> הטיה חיובית = הקבוצה נתנה משקל גבוה יותר למידע משותף.
-                זוהי ההטיה האופיינית ב-Hidden Profile Tasks - קבוצות נוטות לדון במידע שכולם יודעים.
+                <strong>הסבר פירוש הציונים:</strong><br/>
+                • <strong className="text-yellow-700">צהוב (+0.3 ומעלה):</strong> הקבוצה נתנה משקל גבוה יותר למידע משותף - זוהי ההטיה האופיינית ב-Hidden Profile<br/>
+                • <strong className="text-gray-700">אפור (-0.3 עד +0.3):</strong> הקבוצה נתנה משקל דומה לשני סוגי המידע<br/>
+                • <strong className="text-green-700">ירוק (-0.3 ומטה):</strong> הקבוצה נתנה משקל גבוה יותר למידע ייחודי - הצליחה להתגבר על ההטיה!
               </p>
             </div>
           </div>
