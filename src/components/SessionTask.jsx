@@ -45,9 +45,9 @@ const SessionTask = () => {
         'נוכחות מרשימה בכנסים מקצועיים'
       ],
       unique_info: {
-        group1: ['שיעור עזיבה גבוה (40%) בצוותים שניהלה בשנתיים האחרונות', 'הפרויקט המוצלח היה בעיקר הודות למנהל הטכני, לא לה'],
-        group2: ['התקבלו 3 תלונות רשמיות על יחס משפיל לעובדים זוטרים', 'נוטה לקבל החלטות חפוזות מבלי להתייעץ עם הצוות'],
-        group3: ['מתקשה לקבל ביקורת, מגיבה בהתגוננות', 'צוותים מדווחים על חוסר תקשורת ושקיפות']
+        member0: 'שיעור עזיבה גבוה (40%) בצוותים שניהלה בשנתיים האחרונות',
+        member1: 'התקבלו 3 תלונות רשמיות על יחס משפיל לעובדים זוטרים',
+        member2: 'מתקשה לקבל ביקורת, מגיבה בהתגוננות'
       }
     },
     {
@@ -61,9 +61,9 @@ const SessionTask = () => {
         'פחות ידוע בתעשייה, לא כתב מאמרים או נאומים'
       ],
       unique_info: {
-        group1: ['שיעור שימור עובדים מצוין (92%) - הגבוה ביותר בחברה הקודמת', '5 עובדים לשעבר כתבו המלצות נלהבות עליו ברשתות חברתיות'],
-        group2: ['פיתח תהליך חדשני שקיצר זמני פיתוח ב-30%', 'מדורג 4.9/5 על "יכולת שיתוף פעולה" ו"פתיחות לרעיונות" ע"י עמיתים'],
-        group3: ['הצליח להפוך פרויקט כושל לפרויקט מוצלח תוך 6 חודשים', 'עובדים מתארים אותו כ"מנהיג אמפתי שמעצים את הצוות"']
+        member0: 'שיעור שימור עובדים מצוין (92%) - הגבוה ביותר בחברה הקודמת',
+        member1: 'פיתח תהליך חדשני שקיצר זמני פיתוח ב-30%',
+        member2: 'מדורג 4.9/5 על "יכולת שיתוף פעולה" ו"פתיחות לרעיונות" ע"י עמיתים'
       }
     },
     {
@@ -77,9 +77,9 @@ const SessionTask = () => {
         'חברה בוועדות מקצועיות ארציות'
       ],
       unique_info: {
-        group1: ['נוטה לעבוד לפי שיטות מסורתיות, מתנגדת לשיטות Agile', '2 מהפרויקטים שלה בשנים האחרונות עלו על התקציב ב-40%'],
-        group2: ['צוותים שלה מדווחים על "מיקרומנג\'מנט" ו"חוסר אוטונומיה"', 'פעמיים התפטרו מנהלי צוות בכירים תחתיה בתוך שנה'],
-        group3: ['התקשתה להסתגל לעבודה היברידית לאחר הקורונה', 'עובדים מתארים סביבת עבודה "קשיחה ופחות יצירתית"']
+        member0: 'נוטה לעבוד לפי שיטות מסורתיות, מתנגדת לשיטות Agile',
+        member1: 'צוותים שלה מדווחים על "מיקרומנג\'מנט" ו"חוסר אוטונומיה"',
+        member2: 'התקשתה להסתגל לעבודה היברידית לאחר הקורונה'
       }
     }
   ];
@@ -136,16 +136,18 @@ const SessionTask = () => {
     if (!myGroup) return null;
     
     const myMemberIndex = myGroup.members.findIndex(m => m.id === participantId);
-    const groupKeys = ['group1', 'group2', 'group3'];
-    const groupKey = groupKeys[myMemberIndex % 3];
+    const memberKey = `member${myMemberIndex % 3}`;
     
-    return candidates.map(candidate => ({
-      ...candidate,
-      my_info: [
-        ...candidate.shared_info,
-        ...(candidate.unique_info[groupKey] || [])
-      ]
-    }));
+    return candidates.map(candidate => {
+      const myUniqueInfo = candidate.unique_info[memberKey];
+      return {
+        ...candidate,
+        my_info: [
+          ...candidate.shared_info,
+          ...(myUniqueInfo ? [myUniqueInfo] : [])
+        ]
+      };
+    });
   };
 
   const getAllGroupInfoPieces = () => {
@@ -164,16 +166,14 @@ const SessionTask = () => {
         });
       });
       
-      Object.entries(candidate.unique_info).forEach(([groupKey, infoArray]) => {
-        infoArray.forEach((info, idx) => {
-          allPieces.push({
-            candidate: candidate.name,
-            candidateId: candidate.id,
-            text: info,
-            id: `${candidate.id}_${groupKey}_${idx}`,
-            type: 'unique',
-            groupKey: groupKey
-          });
+      Object.entries(candidate.unique_info).forEach(([memberKey, info]) => {
+        allPieces.push({
+          candidate: candidate.name,
+          candidateId: candidate.id,
+          text: info,
+          id: `${candidate.id}_${memberKey}`,
+          type: 'unique',
+          memberKey: memberKey
         });
       });
     });
