@@ -14,19 +14,19 @@ const SessionAnalysis = () => {
   const candidates = [
     {
       id: 'candidate_a',
-      name: 'מועמד א',
+      name: 'Candidate A',
       shared_info: [
-        'מסוגל לבטא את עצמו בצורה ברורה ומשכנעת',
-        'בעל ביטחון עצמי גבוה',
-        'נחוש ואסרטיבי בקבלת החלטות',
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו',
-        'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים'
+        'Able to express himself clearly and persuasively',
+        'Highly self-confident',
+        'Determined and assertive in making decisions',
+        'Has high intellectual ability',
+        'Seen as having an overly high opinion of himself',
+        'Rigid in his views and not always open to others'
       ],
       unique_info: {
-        group1: ['מלא באנרגיה ויוזמה', 'שאפתן ומונע על ידי הצלחה'],
-        group2: ['נוטה להחזיק בדעות קדומות כלפי אחרים', 'נוטה להתחמק מאחריות כשהדברים משתבשים'],
-        group3: ['לא תמיד כן ונוטה להסתיר מידע', 'חסר רחמים ומוכן לפגוע באחרים למען מטרותיו']
+        group1: ['Full of energy and initiative', 'Ambitious and driven by success'],
+        group2: ['Tends to hold prejudices toward others', 'Tends to avoid responsibility when things go wrong'],
+        group3: ['Not always honest and tends to hide information', 'Ruthless and willing to hurt others to reach his goals']
       },
       positive_shared: 4,
       negative_shared: 2,
@@ -35,19 +35,19 @@ const SessionAnalysis = () => {
     },
     {
       id: 'candidate_b',
-      name: 'מועמד ב',
+      name: 'Candidate B',
       shared_info: [
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'מסוגל לבטא את עצמו בצורה ברורה ומשכנעת',
-        'בעל ביטחון עצמי גבוה',
-        'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים',
-        'נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו',
-        'נוטה להחזיק בדעות קדומות כלפי אחרים'
+        'Has high intellectual ability',
+        'Able to express himself clearly and persuasively',
+        'Highly self-confident',
+        'Rigid in his views and not always open to others',
+        'Seen as having an overly high opinion of himself',
+        'Tends to hold prejudices toward others'
       ],
       unique_info: {
-        group1: ['אחראי ונוטל אחריות מלאה על פעולותיו', 'כן וישר בתקשורת עם אחרים'],
-        group2: ['הוגן ושוויוני ביחסו לאנשים', 'ראוי לאמון ושומר על סודיות'],
-        group3: ['בעל שיקול דעת בוגר ומאוזן', 'מציג עקביות בין דיבור למעשה']
+        group1: ['Responsible and takes full ownership of his actions', 'Honest and straightforward in communicating with others'],
+        group2: ['Fair and egalitarian in how he treats people', 'Trustworthy and keeps confidences'],
+        group3: ['Shows mature, balanced judgment', 'Consistent between what he says and what he does']
       },
       positive_shared: 3,
       negative_shared: 3,
@@ -56,19 +56,19 @@ const SessionAnalysis = () => {
     },
     {
       id: 'candidate_c',
-      name: 'מועמד ג',
+      name: 'Candidate C',
       shared_info: [
-        'מלא באנרגיה ויוזמה',
-        'שאפתן ומונע על ידי הצלחה',
-        'נחוש ואסרטיבי בקבלת החלטות',
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'חסר רחמים ומוכן לפגוע באחרים למען מטרותיו',
-        'לא תמיד כן ונוטה להסתיר מידע'
+        'Full of energy and initiative',
+        'Ambitious and driven by success',
+        'Determined and assertive in making decisions',
+        'Has high intellectual ability',
+        'Ruthless and willing to hurt others to reach his goals',
+        'Not always honest and tends to hide information'
       ],
       unique_info: {
-        group1: ['מסוגל לבטא את עצמו בצורה ברורה ומשכנעת', 'בעל ביטחון עצמי גבוה'],
-        group2: ['נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו', 'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים'],
-        group3: ['נוטה להחזיק בדעות קדומות כלפי אחרים', 'נוטה להתחמק מאחריות כשהדברים משתבשים']
+        group1: ['Able to express himself clearly and persuasively', 'Highly self-confident'],
+        group2: ['Seen as having an overly high opinion of himself', 'Rigid in his views and not always open to others'],
+        group3: ['Tends to hold prejudices toward others', 'Tends to avoid responsibility when things go wrong']
       },
       positive_shared: 4,
       negative_shared: 2,
@@ -117,7 +117,7 @@ const SessionAnalysis = () => {
         choices.push({
           groupName: group.name,
           choice: group.groupDecision.choice,
-          choiceName: candidates.find(c => c.id === group.groupDecision.choice)?.name || 'לא ידוע'
+          choiceName: candidates.find(c => c.id === group.groupDecision.choice)?.name || 'Unknown'
         });
       }
     });
@@ -162,7 +162,7 @@ const SessionAnalysis = () => {
         
         analysis.push({
           groupName: group.name,
-          groupChoice: candidates.find(c => c.id === group.groupDecision?.choice)?.name || 'לא ידוע',
+          groupChoice: candidates.find(c => c.id === group.groupDecision?.choice)?.name || 'Unknown',
           meanShared: parseFloat(meanShared),
           meanUnique: parseFloat(meanUnique),
           bias: parseFloat(meanShared) - parseFloat(meanUnique)
@@ -182,9 +182,9 @@ const SessionAnalysis = () => {
     
     csv += 'Individual Choices (Pre-Discussion)\n';
     csv += 'Candidate,Count\n';
-    csv += `מועמד א,${individualChoices.candidate_a}\n`;
-    csv += `מועמד ב,${individualChoices.candidate_b}\n`;
-    csv += `מועמד ג,${individualChoices.candidate_c}\n\n`;
+    csv += `Candidate A,${individualChoices.candidate_a}\n`;
+    csv += `Candidate B,${individualChoices.candidate_b}\n`;
+    csv += `Candidate C,${individualChoices.candidate_c}\n\n`;
     
     csv += 'Group Decisions (Post-Discussion)\n';
     csv += 'Group,Choice\n';
@@ -212,11 +212,11 @@ const SessionAnalysis = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="ltr">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
             <div className="animate-spin w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full mx-auto mb-6"></div>
-            <p>טוען נתונים...</p>
+            <p>Loading data...</p>
           </div>
         </div>
       </div>
@@ -229,46 +229,46 @@ const SessionAnalysis = () => {
   const totalIndividuals = individualChoices.candidate_a + individualChoices.candidate_b + individualChoices.candidate_c;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 p-6" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 p-6" dir="ltr">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center">
-              <BarChart3 className="w-8 h-8 text-indigo-600 ml-3" />
-              <h1 className="text-3xl font-bold">ניתוח תוצאות - Hidden Profile Task</h1>
+              <BarChart3 className="w-8 h-8 text-indigo-600 mr-3" />
+              <h1 className="text-3xl font-bold">Results Analysis - Hidden Profile Task</h1>
             </div>
             <button
               onClick={exportToCSV}
               className="flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
             >
-              <Download className="w-5 h-5 ml-2" />
-              ייצא ל-CSV
+              <Download className="w-5 h-5 mr-2" />
+              Export to CSV
             </button>
           </div>
 
           {/* Section 1: Individual Choices */}
           <div className="mb-8 p-6 bg-blue-50 rounded-lg">
             <h2 className="text-2xl font-bold mb-4 flex items-center">
-              <Users className="w-6 h-6 ml-2" />
-              בחירות אישיות (לפני דיון)
+              <Users className="w-6 h-6 mr-2" />
+              Individual Choices (Before Discussion)
             </h2>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-white p-4 rounded-lg border-2 border-blue-200">
-                <h3 className="font-semibold text-lg mb-2">מועמד א</h3>
+                <h3 className="font-semibold text-lg mb-2">Candidate A</h3>
                 <p className="text-3xl font-bold text-blue-600">{individualChoices.candidate_a}</p>
                 <p className="text-sm text-gray-600">
                   ({totalIndividuals > 0 ? ((individualChoices.candidate_a / totalIndividuals) * 100).toFixed(1) : 0}%)
                 </p>
               </div>
               <div className="bg-white p-4 rounded-lg border-2 border-green-200">
-                <h3 className="font-semibold text-lg mb-2">מועמד ב</h3>
+                <h3 className="font-semibold text-lg mb-2">Candidate B</h3>
                 <p className="text-3xl font-bold text-green-600">{individualChoices.candidate_b}</p>
                 <p className="text-sm text-gray-600">
                   ({totalIndividuals > 0 ? ((individualChoices.candidate_b / totalIndividuals) * 100).toFixed(1) : 0}%)
                 </p>
               </div>
               <div className="bg-white p-4 rounded-lg border-2 border-purple-200">
-                <h3 className="font-semibold text-lg mb-2">מועמד ג</h3>
+                <h3 className="font-semibold text-lg mb-2">Candidate C</h3>
                 <p className="text-3xl font-bold text-purple-600">{individualChoices.candidate_c}</p>
                 <p className="text-sm text-gray-600">
                   ({totalIndividuals > 0 ? ((individualChoices.candidate_c / totalIndividuals) * 100).toFixed(1) : 0}%)
@@ -279,7 +279,7 @@ const SessionAnalysis = () => {
 
           {/* Section 2: Group Decisions */}
           <div className="mb-8 p-6 bg-orange-50 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">החלטות קבוצתיות (אחרי דיון)</h2>
+            <h2 className="text-2xl font-bold mb-4">Group Decisions (After Discussion)</h2>
             <div className="space-y-3">
               {groupChoices.map((choice, idx) => (
                 <div key={idx} className="bg-white p-4 rounded-lg border-2 border-orange-200 flex items-center justify-between">
@@ -297,16 +297,16 @@ const SessionAnalysis = () => {
 
           {/* Section 3: Weight Analysis */}
           <div className="mb-8 p-6 bg-purple-50 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">ניתוח משקלים - מידע משותף לעומת ייחודי</h2>
+            <h2 className="text-2xl font-bold mb-4">Weight Analysis - Shared vs. Unique Information</h2>
             <div className="overflow-x-auto">
               <table className="w-full bg-white rounded-lg overflow-hidden">
                 <thead className="bg-purple-200">
                   <tr>
-                    <th className="p-3 text-right">קבוצה</th>
-                    <th className="p-3 text-right">החלטה</th>
-                    <th className="p-3 text-right">ממוצע משקל - מידע משותף</th>
-                    <th className="p-3 text-right">ממוצע משקל - מידע ייחודי</th>
-                    <th className="p-3 text-right">הטיה (משותף - ייחודי)</th>
+                    <th className="p-3 text-left">Group</th>
+                    <th className="p-3 text-left">Decision</th>
+                    <th className="p-3 text-left">Mean weight - shared information</th>
+                    <th className="p-3 text-left">Mean weight - unique information</th>
+                    <th className="p-3 text-left">Bias (shared - unique)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -334,10 +334,10 @@ const SessionAnalysis = () => {
             </div>
             <div className="mt-4 p-4 bg-yellow-50 rounded border border-yellow-200">
               <p className="text-sm">
-                <strong>הסבר פירוש הציונים:</strong><br/>
-                • <strong className="text-yellow-700">צהוב (+0.3 ומעלה):</strong> הקבוצה נתנה משקל גבוה יותר למידע משותף - זוהי ההטיה האופיינית ב-Hidden Profile<br/>
-                • <strong className="text-gray-700">אפור (-0.3 עד +0.3):</strong> הקבוצה נתנה משקל דומה לשני סוגי המידע<br/>
-                • <strong className="text-green-700">ירוק (-0.3 ומטה):</strong> הקבוצה נתנה משקל גבוה יותר למידע ייחודי - הצליחה להתגבר על ההטיה!
+                <strong>How to read the scores:</strong><br/>
+                • <strong className="text-yellow-700">Yellow (+0.3 and above):</strong> the group gave more weight to shared information - this is the typical Hidden Profile bias<br/>
+                • <strong className="text-gray-700">Gray (-0.3 to +0.3):</strong> the group gave similar weight to both types of information<br/>
+                • <strong className="text-green-700">Green (-0.3 and below):</strong> the group gave more weight to unique information - it overcame the bias!
               </p>
             </div>
           </div>
@@ -345,61 +345,61 @@ const SessionAnalysis = () => {
           {/* Section 4: Information Structure Reveal */}
           <div className="p-6 bg-emerald-50 rounded-lg">
             <h2 className="text-2xl font-bold mb-4 flex items-center">
-              <CheckCircle className="w-6 h-6 ml-2 text-emerald-600" />
-              מבנה המידע לפי Stasser & Titus (1985)
+              <CheckCircle className="w-6 h-6 mr-2 text-emerald-600" />
+              Information Structure According to Stasser & Titus (1985)
             </h2>
             
             <div className="mb-6 p-4 bg-white rounded-lg border-2 border-emerald-300">
-              <h3 className="text-xl font-bold mb-3 text-emerald-700">מועמד ב - המועמד האופטימלי!</h3>
+              <h3 className="text-xl font-bold mb-3 text-emerald-700">Candidate B - the optimal candidate!</h3>
               <div className="grid md:grid-cols-3 gap-4 mb-4">
                 <div className="text-center p-3 bg-blue-50 rounded">
-                  <p className="text-sm font-semibold mb-1">מידע משותף</p>
+                  <p className="text-sm font-semibold mb-1">Shared information</p>
                   <p className="text-2xl font-bold text-blue-600">3+ / 3-</p>
-                  <p className="text-xs text-gray-600">נראה מאוזן</p>
+                  <p className="text-xs text-gray-600">Looks balanced</p>
                 </div>
                 <div className="text-center p-3 bg-green-50 rounded">
-                  <p className="text-sm font-semibold mb-1">מידע ייחודי</p>
+                  <p className="text-sm font-semibold mb-1">Unique information</p>
                   <p className="text-2xl font-bold text-green-600">6+ / 0-</p>
-                  <p className="text-xs text-gray-600">כל היתרונות מוסתרים!</p>
+                  <p className="text-xs text-gray-600">All the advantages are hidden!</p>
                 </div>
                 <div className="text-center p-3 bg-emerald-50 rounded">
-                  <p className="text-sm font-semibold mb-1">סה"כ</p>
+                  <p className="text-sm font-semibold mb-1">Total</p>
                   <p className="text-2xl font-bold text-emerald-600">9+ / 3-</p>
-                  <p className="text-xs text-gray-600">יחס 3:1 - הטוב ביותר</p>
+                  <p className="text-xs text-gray-600">3:1 ratio - the best</p>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="p-4 bg-white rounded-lg border-2 border-blue-200">
-                <h3 className="text-lg font-bold mb-2 text-blue-700">מועמד א</h3>
+                <h3 className="text-lg font-bold mb-2 text-blue-700">Candidate A</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>מידע משותף:</strong> 4 חיובי, 2 שלילי</p>
-                  <p><strong>מידע ייחודי:</strong> 2 חיובי, 4 שלילי</p>
-                  <p className="font-semibold text-blue-600">סה"כ: 6 חיובי / 6 שלילי (יחס 1:1)</p>
+                  <p><strong>Shared information:</strong> 4 positive, 2 negative</p>
+                  <p><strong>Unique information:</strong> 2 positive, 4 negative</p>
+                  <p className="font-semibold text-blue-600">Total: 6 positive / 6 negative (1:1 ratio)</p>
                 </div>
-                <p className="text-sm text-gray-700">נראה טוב במידע המשותף, אבל למעשה מאוזן</p>
+                <p className="text-sm text-gray-700">Looks good on the shared information, but is actually balanced</p>
               </div>
               
               <div className="p-4 bg-white rounded-lg border-2 border-purple-200">
-                <h3 className="text-lg font-bold mb-2 text-purple-700">מועמד ג</h3>
+                <h3 className="text-lg font-bold mb-2 text-purple-700">Candidate C</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>מידע משותף:</strong> 4 חיובי, 2 שלילי</p>
-                  <p><strong>מידע ייחודי:</strong> 2 חיובי, 4 שלילי</p>
-                  <p className="font-semibold text-purple-600">סה"כ: 6 חיובי / 6 שלילי (יחס 1:1)</p>
+                  <p><strong>Shared information:</strong> 4 positive, 2 negative</p>
+                  <p><strong>Unique information:</strong> 2 positive, 4 negative</p>
+                  <p className="font-semibold text-purple-600">Total: 6 positive / 6 negative (1:1 ratio)</p>
                 </div>
-                <p className="text-sm text-gray-700">גם הוא נראה טוב במידע המשותף, אבל גם מאוזן</p>
+                <p className="text-sm text-gray-700">Also looks good on the shared information, but is also balanced</p>
               </div>
             </div>
 
             <div className="p-4 bg-red-50 rounded-lg border-2 border-red-300">
-              <h3 className="font-bold mb-2 text-red-800">ההטיה הקלאסית של Hidden Profile (Stasser & Titus, 1985):</h3>
+              <h3 className="font-bold mb-2 text-red-800">The classic Hidden Profile bias (Stasser & Titus, 1985):</h3>
               <ul className="text-sm space-y-2">
-                <li>• <strong>במידע המשותף:</strong> מועמדים א' וג' נראים טובים יותר (4 חיובי לעומת 3 של ב')</li>
-                <li>• <strong>במידע המלא:</strong> מועמד ב' אובייקטיבית הטוב ביותר (יחס 3:1 לעומת 1:1)</li>
-                <li>• <strong>הבעיה:</strong> כל 6 התכונות החיוביות של ב' נמצאות במידע הייחודי המפוזר בין הקבוצות</li>
-                <li>• <strong>התוצאה:</strong> קבוצות נוטות לדון במידע המשותף (discussion bias) ולכן מפספסות את היתרון של ב'</li>
-                <li>• <strong>המסקנה:</strong> רק שיתוף יסודי של כל המידע הייחודי יגלה שב' הוא הבחירה האופטימלית</li>
+                <li>• <strong>On the shared information:</strong> candidates A and C look better (4 positive vs. 3 for B)</li>
+                <li>• <strong>On the full information:</strong> candidate B is objectively the best (3:1 ratio vs. 1:1)</li>
+                <li>• <strong>The problem:</strong> all 6 of B's positive traits are in the unique information spread across the group</li>
+                <li>• <strong>The result:</strong> groups tend to discuss the shared information (discussion bias) and so miss B's advantage</li>
+                <li>• <strong>The conclusion:</strong> only thorough sharing of all the unique information reveals that B is the optimal choice</li>
               </ul>
             </div>
           </div>
@@ -409,7 +409,7 @@ const SessionAnalysis = () => {
               onClick={() => navigate('/instructor')}
               className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700"
             >
-              חזור לדף המרצה
+              Back to the instructor page
             </button>
           </div>
         </div>

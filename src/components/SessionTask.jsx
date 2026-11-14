@@ -36,50 +36,50 @@ const SessionTask = () => {
   const candidates = [
     {
       id: 'candidate_a',
-      name: 'מועמדת א\' - רונית כהן',
+      name: 'Candidate A - Ronit Cohen',
       shared_info: [
-        '12 שנות ניסיון בניהול פרויקטים',
-        'MBA ממכללה מוכרת',
-        'הובילה פרויקט שהניב הכנסה של 3 מיליון ₪',
-        'ציון ממוצע של 4.2/5 בהערכות ביצועים שנתיות',
-        'נוכחות מרשימה בכנסים מקצועיים'
+        '12 years of project management experience',
+        'MBA from an accredited college',
+        'Led a project that generated ₪3 million (NIS) in revenue',
+        'Average score of 4.2/5 in annual performance reviews',
+        'Impressive presence at professional conferences'
       ],
       unique_info: {
-        member0: 'שיעור עזיבה גבוה (40%) בצוותים שניהלה בשנתיים האחרונות',
-        member1: 'התקבלו 3 תלונות רשמיות על יחס משפיל לעובדים זוטרים',
-        member2: 'מתקשה לקבל ביקורת, מגיבה בהתגוננות'
+        member0: 'High turnover (40%) in the teams she managed over the past two years',
+        member1: 'Three formal complaints were filed about her demeaning treatment of junior employees',
+        member2: 'Has difficulty accepting criticism and reacts defensively'
       }
     },
     {
       id: 'candidate_b',
-      name: 'מועמד ב\' - יואב לוי',
+      name: 'Candidate B - Yoav Levi',
       shared_info: [
-        '7 שנות ניסיון בניהול',
-        'תואר ראשון בהנדסת תעשייה וניהול',
-        'ניהל פרויקטים בתקציב של 500,000 - 1 מיליון ₪',
-        'ציון ממוצע של 3.8/5 בהערכות ביצועים',
-        'פחות ידוע בתעשייה, לא כתב מאמרים או נאומים'
+        '7 years of management experience',
+        'Bachelor\'s degree in industrial engineering and management',
+        'Managed projects with budgets of ₪500,000 - ₪1 million (NIS)',
+        'Average score of 3.8/5 in performance reviews',
+        'Less well known in the industry; has not written articles or given talks'
       ],
       unique_info: {
-        member0: 'שיעור שימור עובדים יוצא דופן (95%) - הגבוה ביותר בכל החברה הקודמת, ועובדים מתארים אותו כ"מנהיג מעצים ואמפתי"',
-        member1: 'התקשה בתחילת הקריירה עם ניהול זמנים ועמידה בלוחות',
-        member2: 'נתפס כפחות אסרטיבי מדי במצבי קונפליקט'
+        member0: 'Exceptional employee retention (95%) - the highest in his entire previous company - and employees describe him as "an empowering and empathetic leader"',
+        member1: 'Early in his career, struggled with time management and meeting deadlines',
+        member2: 'Seen as not assertive enough in conflict situations'
       }
     },
     {
       id: 'candidate_c',
-      name: 'מועמדת ג\' - דנה מזרחי',
+      name: 'Candidate C - Dana Mizrahi',
       shared_info: [
-        '15 שנות ניסיון בתעשייה (הכי ותיקה)',
-        'תואר שני בניהול עסקים',
-        'פרסמה שני מאמרים בכתבי עת מקצועיים',
-        'ציון ממוצע של 4.0/5 בהערכות ביצועים',
-        'חברה בוועדות מקצועיות ארציות'
+        '15 years of industry experience (the most senior)',
+        'Master\'s degree in business administration',
+        'Published two articles in professional journals',
+        'Average score of 4.0/5 in performance reviews',
+        'Member of national professional committees'
       ],
       unique_info: {
-        member0: 'נוטה לעבוד לפי שיטות מסורתיות, מתנגדת לשיטות Agile',
-        member1: 'צוותים שלה מדווחים על "מיקרומנג\'מנט" ו"חוסר אוטונומיה"',
-        member2: 'התקשתה להסתגל לעבודה היברידית לאחר הקורונה'
+        member0: 'Tends to work with traditional methods and opposes Agile methods',
+        member1: 'Her teams report "micromanagement" and "lack of autonomy"',
+        member2: 'Struggled to adapt to hybrid work after COVID'
       }
     }
   ];
@@ -183,7 +183,7 @@ const SessionTask = () => {
 
   const markReady = async () => {
     if (!selectedCandidate) {
-      setError('נדרש לבחור מועמד לפני המעבר לדיון');
+      setError('Please choose a candidate before moving on to the discussion');
       return;
     }
 
@@ -195,7 +195,7 @@ const SessionTask = () => {
       setCurrentStage('waiting_for_others');
     } catch (error) {
       console.error('Error marking ready:', error);
-      setError('שגיאה בסימון מוכן. נסה שוב.');
+      setError('Error marking you as ready. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -203,7 +203,7 @@ const SessionTask = () => {
 
   const submitGroupDecisionHandler = async () => {
     if (!groupDecision) {
-      setError('נדרש לבחור מועמד');
+      setError('Please choose a candidate');
       return;
     }
 
@@ -216,7 +216,7 @@ const SessionTask = () => {
       setCurrentStage('rate_information');
     } catch (error) {
       console.error('Error submitting decision:', error);
-      setError('שגיאה בשליחת החלטה. נסה שוב.');
+      setError('Error submitting the decision. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -227,7 +227,7 @@ const SessionTask = () => {
     const missingRatings = allPieces.some(piece => !infoRatings[piece.id]);
     
     if (missingRatings) {
-      setError('נדרש לדרג את כל פיסות המידע');
+      setError('Please rate all pieces of information');
       return;
     }
 
@@ -240,7 +240,7 @@ const SessionTask = () => {
       setCurrentStage('complete');
     } catch (error) {
       console.error('Error submitting ratings:', error);
-      setError('שגיאה בשליחת דירוגים. נסה שוב.');
+      setError('Error submitting the ratings. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -252,7 +252,7 @@ const SessionTask = () => {
 
     return (
       <div className="border rounded-lg p-4 bg-blue-50">
-        <h4 className="font-semibold mb-3 text-sm">המידע שלך (לזיכרון):</h4>
+        <h4 className="font-semibold mb-3 text-sm">Your information (for reference):</h4>
         <div className="space-y-3 max-h-96 overflow-y-auto">
           {myInfo.map(candidate => (
             <div key={candidate.id} className="bg-white rounded p-3 border">
@@ -271,12 +271,12 @@ const SessionTask = () => {
 
   if (currentStage === 'waiting') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="ltr">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
             <div className="animate-spin w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full mx-auto mb-6"></div>
-            <h2 className="text-xl font-semibold mb-4">ממתין להתחלת המשימה...</h2>
-            <p className="text-gray-600">שלום {participantName}!</p>
+            <h2 className="text-xl font-semibold mb-4">Waiting for the task to start...</h2>
+            <p className="text-gray-600">Hello {participantName}!</p>
           </div>
         </div>
       </div>
@@ -286,11 +286,11 @@ const SessionTask = () => {
   if (currentStage === 'group_assignment') {
     if (!myGroup) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="rtl">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="ltr">
           <div className="max-w-md mx-auto">
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
               <div className="animate-spin w-12 h-12 border-4 border-red-200 border-t-red-600 rounded-full mx-auto mb-6"></div>
-              <p>טוען מידע על הקבוצה...</p>
+              <p>Loading group information...</p>
             </div>
           </div>
         </div>
@@ -298,20 +298,20 @@ const SessionTask = () => {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-6" dir="ltr">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <Users className="w-16 h-16 mx-auto mb-6 text-purple-600" />
-            <h2 className="text-2xl font-bold text-center mb-6">הקבוצה שלך</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Your Group</h2>
             
             <div className="mb-6 p-4 bg-purple-50 rounded-lg">
               <h3 className="text-lg font-semibold mb-4 text-center">{myGroup.name}</h3>
               <div className="space-y-3">
                 {myGroup.members.map((member) => (
                   <div key={member.id} className="bg-white p-3 rounded-lg flex items-center">
-                    <UserCheck className="w-5 h-5 text-purple-600 ml-3" />
+                    <UserCheck className="w-5 h-5 text-purple-600 mr-3" />
                     <span className={member.id === participantId ? 'font-bold' : ''}>
-                      {member.name} {member.id === participantId && '(את/ה)'}
+                      {member.name} {member.id === participantId && '(you)'}
                     </span>
                   </div>
                 ))}
@@ -319,14 +319,14 @@ const SessionTask = () => {
             </div>
 
             <div className="p-4 bg-yellow-50 rounded-lg mb-6">
-              <h3 className="font-semibold mb-2">הוראות המשימה:</h3>
+              <h3 className="font-semibold mb-2">Task instructions:</h3>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>• <strong>התיישבו יחד</strong> עם חברי הקבוצה</li>
-                <li>• כל אחד יקבל מידע על 3 מועמדים למשרת ניהול</li>
-                <li>• קראו <strong>לבד</strong> את המידע ובחרו מועמד באופן אישי</li>
-                <li>• <strong>אל תרשמו הערות</strong> - רק את הבחירה שלכם</li>
-                <li>• לאחר מכן <strong>דנו פנים אל פנים</strong> והגיעו להחלטה קבוצתית</li>
-                <li>• המטרה: לזהות את המועמד הטוב ביותר על בסיס המידע הזמין</li>
+                <li>• <strong>Sit together</strong> with your group members</li>
+                <li>• Each of you will receive information about 3 candidates for a management position</li>
+                <li>• Read the information <strong>on your own</strong> and choose a candidate individually</li>
+                <li>• <strong>Do not take notes</strong> - only record your choice</li>
+                <li>• Then <strong>discuss face to face</strong> and reach a group decision</li>
+                <li>• The goal: identify the best candidate based on the available information</li>
               </ul>
             </div>
 
@@ -334,7 +334,7 @@ const SessionTask = () => {
               onClick={() => setCurrentStage('individual')}
               className="w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700"
             >
-              המשך לקריאת המידע האישי
+              Continue to your information
             </button>
           </div>
         </div>
@@ -348,23 +348,23 @@ const SessionTask = () => {
     if (!myInfo) return null;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6" dir="ltr">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold mb-6 text-center">שלב 1: בחירה אישית</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">Step 1: Individual Choice</h2>
             
             <div className="mb-6 p-4 bg-blue-50 rounded-lg">
               <p className="text-sm mb-2">
-                <strong>משימה:</strong> זהה את המועמד הטוב ביותר למשרת ניהול בארגון.
+                <strong>Task:</strong> Identify the best candidate for a management position in the organization.
               </p>
               <p className="text-sm mb-2">
-                קרא את המידע על שלושת המועמדים ובחר את המועמד שנראה לך הטוב ביותר.
+                Read the information about the three candidates and choose the one who seems best to you.
               </p>
               <p className="text-sm mb-2">
-                <strong>אל תדון</strong> עם אחרים כעת. <strong>אל תרשום הערות</strong> - רק בחר מועמד.
+                <strong>Do not discuss</strong> with others yet. <strong>Do not take notes</strong> - just choose a candidate.
               </p>
               <p className="text-sm font-semibold text-blue-800">
-                לאחר מכן תדונו <strong>פנים אל פנים</strong> ותגיעו להחלטה משותפת.
+                Afterwards you will discuss <strong>face to face</strong> and reach a joint decision.
               </p>
             </div>
 
@@ -374,7 +374,7 @@ const SessionTask = () => {
                   borderColor: selectedCandidate === candidate.id ? '#4f46e5' : '#e5e7eb'
                 }}>
                   <div className="flex items-center mb-4">
-                    <button onClick={() => setSelectedCandidate(candidate.id)} className="ml-3">
+                    <button onClick={() => setSelectedCandidate(candidate.id)} className="mr-3">
                       {selectedCandidate === candidate.id ? (
                         <CheckCircle className="w-7 h-7 text-green-600" />
                       ) : (
@@ -384,7 +384,7 @@ const SessionTask = () => {
                     <h3 className="text-lg font-semibold">{candidate.name}</h3>
                   </div>
                   
-                  <ul className="mr-10 space-y-2">
+                  <ul className="ml-10 space-y-2">
                     {candidate.my_info.map((info, idx) => (
                       <li key={idx} className="text-sm bg-gray-50 p-2 rounded">• {info}</li>
                     ))}
@@ -401,7 +401,7 @@ const SessionTask = () => {
                 disabled={!selectedCandidate || loading}
                 className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50"
               >
-                {loading ? 'שולח...' : 'סיימתי - מוכן לדיון קבוצתי'}
+                {loading ? 'Submitting...' : 'Done - ready for the group discussion'}
               </button>
             </div>
           </div>
@@ -415,23 +415,23 @@ const SessionTask = () => {
     const totalMembers = myGroup?.members.length || 0;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 p-6" dir="ltr">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <CheckCircle className="w-16 h-16 mx-auto mb-6 text-green-600" />
-            <h2 className="text-2xl font-bold text-center mb-6">מוכן לדיון!</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Ready for the discussion!</h2>
             
             <div className="mb-6 p-4 bg-green-50 rounded-lg text-center">
               <p className="mb-2">
-                <strong>הבחירה האישית שלך:</strong> {candidates.find(c => c.id === selectedCandidate)?.name}
+                <strong>Your individual choice:</strong> {candidates.find(c => c.id === selectedCandidate)?.name}
               </p>
               <p className="text-sm text-gray-600">
-                המתן לחברי הקבוצה, ואז <strong>דנו ביחד</strong> והגיעו להחלטה משותפת
+                Wait for your group members, then <strong>discuss together</strong> and reach a joint decision
               </p>
             </div>
 
             <div className="p-4 bg-blue-50 rounded-lg mb-6">
-              <h3 className="font-semibold mb-3 text-center">סטטוס:</h3>
+              <h3 className="font-semibold mb-3 text-center">Status:</h3>
               <div className="space-y-2">
                 {myGroup?.members.map(member => (
                   <div key={member.id} className="flex items-center justify-between bg-white p-3 rounded">
@@ -445,7 +445,7 @@ const SessionTask = () => {
                 ))}
               </div>
               <p className="text-sm text-gray-600 mt-3 text-center">
-                {readyCount}/{totalMembers} מוכנים
+                {readyCount}/{totalMembers} ready
               </p>
             </div>
 
@@ -458,24 +458,24 @@ const SessionTask = () => {
 
   if (currentStage === 'group_decision_entry') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-100 p-6" dir="ltr">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-center mb-6">שלב 2: החלטת הקבוצה</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Step 2: Group Decision</h2>
             
             <div className="mb-6 p-4 bg-orange-50 rounded-lg">
               <p className="text-sm font-semibold mb-2">
-                לאחר הדיון פנים אל פנים, <strong>בחרו מכשיר אחד</strong> מהקבוצה שישמש להזנת:
+                After the face-to-face discussion, <strong>choose one device</strong> in the group to enter:
               </p>
               <ul className="text-sm space-y-1">
-                <li>1. ההחלטה המשותפת של הקבוצה</li>
-                <li>2. דירוג חשיבות המידע (בשלב הבא)</li>
+                <li>1. The group's joint decision</li>
+                <li>2. The importance ratings of the information (in the next step)</li>
               </ul>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
-                <h3 className="font-semibold mb-4">מהי ההחלטה המשותפת?</h3>
+                <h3 className="font-semibold mb-4">What is the joint decision?</h3>
                 {candidates.map(candidate => (
                   <div 
                     key={candidate.id} 
@@ -485,9 +485,9 @@ const SessionTask = () => {
                   >
                     <div className="flex items-center">
                       {groupDecision === candidate.id ? (
-                        <CheckCircle className="w-6 h-6 text-orange-600 ml-3" />
+                        <CheckCircle className="w-6 h-6 text-orange-600 mr-3" />
                       ) : (
-                        <Circle className="w-6 h-6 text-gray-400 ml-3" />
+                        <Circle className="w-6 h-6 text-gray-400 mr-3" />
                       )}
                       <span className="font-semibold">{candidate.name}</span>
                     </div>
@@ -505,7 +505,7 @@ const SessionTask = () => {
               disabled={!groupDecision || loading}
               className="w-full bg-orange-600 text-white py-3 rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50"
             >
-              {loading ? 'שולח...' : 'המשך לדירוג המידע'}
+              {loading ? 'Submitting...' : 'Continue to rating the information'}
             </button>
           </div>
         </div>
@@ -517,22 +517,22 @@ const SessionTask = () => {
     const allInfo = getAllGroupInfoPieces();
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-purple-100 p-6" dir="ltr">
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-center mb-6">שלב 3: דרגו את חשיבות המידע</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Step 3: Rate the Importance of the Information</h2>
             
             <div className="mb-6 p-4 bg-purple-50 rounded-lg">
               <p className="text-sm mb-2">
-                להלן <strong>כל המידע</strong> שהיה זמין לקבוצה שלכם (מחולק בין החברים).
+                Below is <strong>all the information</strong> that was available to your group (split among the members).
               </p>
               <p className="text-sm font-semibold">
-                דרגו <strong>עד כמה כל פיסת מידע השפיעה על ההחלטה הקבוצתית</strong> שלכם.
+                Rate <strong>how much each piece of information influenced your group's decision</strong>.
               </p>
             </div>
 
             <div className="mb-4 p-3 bg-green-50 rounded-lg text-center">
-              <p className="font-semibold">ההחלטה שלכם: {candidates.find(c => c.id === groupDecision)?.name}</p>
+              <p className="font-semibold">Your decision: {candidates.find(c => c.id === groupDecision)?.name}</p>
             </div>
 
             <div className="space-y-4 max-h-[60vh] overflow-y-auto mb-6 p-2">
@@ -543,7 +543,7 @@ const SessionTask = () => {
                   
                   <div>
                     <label className="block text-xs font-medium mb-2">
-                      עד כמה פיסת מידע זו השפיעה על ההחלטה? (1 = לא השפיעה, 10 = השפיעה מאוד)
+                      How much did this piece of information influence the decision? (1 = not at all, 10 = very much)
                     </label>
                     <input
                       type="range"
@@ -568,7 +568,7 @@ const SessionTask = () => {
               disabled={loading}
               className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 disabled:opacity-50"
             >
-              {loading ? 'שולח...' : 'שלח דירוגים וסיים'}
+              {loading ? 'Submitting...' : 'Submit ratings and finish'}
             </button>
           </div>
         </div>
@@ -578,13 +578,13 @@ const SessionTask = () => {
 
   if (currentStage === 'complete') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-cyan-100 p-6" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-cyan-100 p-6" dir="ltr">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
             <CheckCircle className="w-16 h-16 mx-auto mb-6 text-emerald-600" />
-            <h2 className="text-2xl font-bold mb-4">תודה!</h2>
+            <h2 className="text-2xl font-bold mb-4">Thank you!</h2>
             <p className="text-gray-600 mb-6">
-              הקבוצה שלכם סיימה את המשימה. המרצה יציג כעת את ניתוח התוצאות.
+              Your group has completed the task. The instructor will now present the analysis of the results.
             </p>
           </div>
         </div>

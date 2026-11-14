@@ -15,5 +15,5 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f8fafc;
-  direction: rtl;
+  direction: ltr;
 }

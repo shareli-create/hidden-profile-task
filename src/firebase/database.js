@@ -1,9 +1,16 @@
 import { collection, doc, addDoc, updateDoc, getDocs, onSnapshot, query, where, orderBy, serverTimestamp, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './config';
 
+// The English version keeps all of its data under en/data/... so its sessions,
+// "start new session" and "delete all" never touch the Hebrew version's data.
+// Collection names stay the same, so the existing Firestore indexes still apply.
+const DATA_ROOT = ['en', 'data'];
+const enCol = (name) => collection(db, ...DATA_ROOT, name);
+const enDoc = (name, id) => doc(db, ...DATA_ROOT, name, id);
+
 export const createSession = async (sessionData) => {
   try {
-    const docRef = await addDoc(collection(db, 'sessions'), {
+    const docRef = await addDoc(enCol('sessions'), {
       ...sessionData,
       createdAt: serverTimestamp(),
       status: 'active',
@@ -17,7 +24,7 @@ export const createSession = async (sessionData) => {
 };
 
 export const getSession = (sessionId, callback) => {
-  const sessionRef = doc(db, 'sessions', sessionId);
+  const sessionRef = enDoc('sessions', sessionId);
   return onSnapshot(sessionRef, (docSnap) => {
     if (docSnap.exists()) {
       callback({ id: docSnap.id, ...docSnap.data() });
@@ -32,7 +39,7 @@ export const getSession = (sessionId, callback) => {
 
 export const updateSessionStage = async (sessionId, stage, additionalData = {}) => {
   try {
-    const sessionRef = doc(db, 'sessions', sessionId);
+    const sessionRef = enDoc('sessions', sessionId);
     await updateDoc(sessionRef, {
       currentStage: stage,
       updatedAt: serverTimestamp(),
@@ -47,7 +54,7 @@ export const updateSessionStage = async (sessionId, stage, additionalData = {}) 
 
 export const addParticipant = async (sessionId, participantData) => {
   try {
-    const docRef = await addDoc(collection(db, 'participants'), {
+    const docRef = await addDoc(enCol('participants'), {
       sessionId,
       ...participantData,
       joinedAt: serverTimestamp(),
@@ -62,7 +69,7 @@ export const addParticipant = async (sessionId, participantData) => {
 
 export const getParticipants = (sessionId, callback) => {
   const q = query(
-    collection(db, 'participants'),
+    enCol('participants'),
     where('sessionId', '==', sessionId),
     where('status', '==', 'active'),
     orderBy('joinedAt', 'asc')
@@ -83,7 +90,7 @@ export const createGroups = async (sessionId, groups) => {
   try {
     const batch = [];
     for (const group of groups) {
-      const docRef = await addDoc(collection(db, 'groups'), {
+      const docRef = await addDoc(enCol('groups'), {
         sessionId,
         ...group,
         readyMembers: {},
@@ -101,7 +108,7 @@ export const createGroups = async (sessionId, groups) => {
 
 export const getGroups = (sessionId, callback) => {
   const q = query(
-    collection(db, 'groups'),
+    enCol('groups'),
     where('sessionId', '==', sessionId),
     orderBy('createdAt', 'asc')
   );
@@ -119,7 +126,7 @@ export const getGroups = (sessionId, callback) => {
 
 export const markParticipantReady = async (sessionId, groupId, participantId, individualData) => {
   try {
-    const groupRef = doc(db, 'groups', groupId);
+    const groupRef = enDoc('groups', groupId);
     const groupDoc = await getDoc(groupRef);
     if (!groupDoc.exists()) {
       throw new Error('Group not found');
@@ -144,7 +151,7 @@ export const markParticipantReady = async (sessionId, groupId, participantId, in
 
 export const submitDecision = async (sessionId, groupId, decisionData) => {
   try {
-    const groupRef = doc(db, 'groups', groupId);
+    const groupRef = enDoc('groups', groupId);
     await updateDoc(groupRef, {
       groupDecision: {
         choice: decisionData.choice,
@@ -162,7 +169,7 @@ export const submitDecision = async (sessionId, groupId, decisionData) => {
 
 export const approveGroupDecision = async (sessionId, groupId, participantId, approved) => {
   try {
-    const groupRef = doc(db, 'groups', groupId);
+    const groupRef = enDoc('groups', groupId);
     const groupDoc = await getDoc(groupRef);
     if (!groupDoc.exists()) {
       throw new Error('Group not found');
@@ -177,7 +184,7 @@ export const approveGroupDecision = async (sessionId, groupId, participantId, ap
     const allMembers = currentData.members || [];
     const allApproved = allMembers.every(m => approvals[m.id] === true);
     if (allApproved) {
-      await addDoc(collection(db, 'decisions'), {
+      await addDoc(enCol('decisions'), {
         sessionId,
         groupId,
         groupName: currentData.name,
@@ -196,7 +203,7 @@ export const approveGroupDecision = async (sessionId, groupId, participantId, ap
 
 export const getDecisions = (sessionId, callback) => {
   const q = query(
-    collection(db, 'decisions'),
+    enCol('decisions'),
     where('sessionId', '==', sessionId),
     orderBy('approvedAt', 'desc')
   );
@@ -214,7 +221,7 @@ export const getDecisions = (sessionId, callback) => {
 
 export const checkSessionExists = async (sessionId) => {
   try {
-    const sessionRef = doc(db, 'sessions', sessionId);
+    const sessionRef = enDoc('sessions', sessionId);
     const docSnap = await getDoc(sessionRef);
     return docSnap.exists();
   } catch (error) {
@@ -226,7 +233,7 @@ export const checkSessionExists = async (sessionId) => {
 export const getActiveSession = async () => {
   try {
     const q = query(
-      collection(db, 'sessions'),
+      enCol('sessions'),
       where('status', '==', 'active'),
       orderBy('createdAt', 'desc')
     );
@@ -245,21 +252,21 @@ export const getActiveSession = async () => {
 export const createNewActiveSession = async (sessionData) => {
   try {
     const q = query(
-      collection(db, 'sessions'),
+      enCol('sessions'),
       where('status', '==', 'active')
     );
     const querySnapshot = await getDocs(q);
     const updatePromises = [];
     querySnapshot.forEach((document) => {
       updatePromises.push(
-        updateDoc(doc(db, 'sessions', document.id), {
+        updateDoc(enDoc('sessions', document.id), {
           status: 'inactive',
           closedAt: serverTimestamp()
         })
       );
     });
     await Promise.all(updatePromises);
-    const docRef = await addDoc(collection(db, 'sessions'), {
+    const docRef = await addDoc(enCol('sessions'), {
       ...sessionData,
       createdAt: serverTimestamp(),
       status: 'active',
@@ -297,7 +304,7 @@ export const subscribeToSession = (sessionId, callbacks) => {
 
 export const submitGroupRatings = async (sessionId, groupId, ratingsData) => {
   try {
-    const groupRef = doc(db, 'groups', groupId);
+    const groupRef = enDoc('groups', groupId);
     
     await updateDoc(groupRef, {
       ratings: ratingsData.ratings,
@@ -318,12 +325,12 @@ export const deleteAllData = async () => {
     const collections = ['sessions', 'participants', 'groups', 'decisions'];
     
     for (const collectionName of collections) {
-      const q = query(collection(db, collectionName));
+      const q = query(enCol(collectionName));
       const querySnapshot = await getDocs(q);
       
       const deletePromises = [];
       querySnapshot.forEach((document) => {
-        deletePromises.push(deleteDoc(doc(db, collectionName, document.id)));
+        deletePromises.push(deleteDoc(enDoc(collectionName, document.id)));
       });
       
       await Promise.all(deletePromises);
