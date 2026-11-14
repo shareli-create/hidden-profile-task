@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BarChart3, Download, Users, CheckCircle } from 'lucide-react';
 import { subscribeToSession } from '../firebase/database';
+import { candidates } from '../data/candidates';
 
 const SessionAnalysis = () => {
   const { sessionId } = useParams();
@@ -10,72 +11,6 @@ const SessionAnalysis = () => {
   const [groups, setGroups] = useState([]);
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const candidates = [
-    {
-      id: 'candidate_a',
-      name: 'מועמד א',
-      shared_info: [
-        'מסוגל לבטא את עצמו בצורה ברורה ומשכנעת',
-        'בעל ביטחון עצמי גבוה',
-        'נחוש ואסרטיבי בקבלת החלטות',
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו',
-        'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים'
-      ],
-      unique_info: {
-        group1: ['מלא באנרגיה ויוזמה', 'שאפתן ומונע על ידי הצלחה'],
-        group2: ['נוטה להחזיק בדעות קדומות כלפי אחרים', 'נוטה להתחמק מאחריות כשהדברים משתבשים'],
-        group3: ['לא תמיד כן ונוטה להסתיר מידע', 'חסר רחמים ומוכן לפגוע באחרים למען מטרותיו']
-      },
-      positive_shared: 4,
-      negative_shared: 2,
-      positive_unique: 2,
-      negative_unique: 4
-    },
-    {
-      id: 'candidate_b',
-      name: 'מועמד ב',
-      shared_info: [
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'מסוגל לבטא את עצמו בצורה ברורה ומשכנעת',
-        'בעל ביטחון עצמי גבוה',
-        'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים',
-        'נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו',
-        'נוטה להחזיק בדעות קדומות כלפי אחרים'
-      ],
-      unique_info: {
-        group1: ['אחראי ונוטל אחריות מלאה על פעולותיו', 'כן וישר בתקשורת עם אחרים'],
-        group2: ['הוגן ושוויוני ביחסו לאנשים', 'ראוי לאמון ושומר על סודיות'],
-        group3: ['בעל שיקול דעת בוגר ומאוזן', 'מציג עקביות בין דיבור למעשה']
-      },
-      positive_shared: 3,
-      negative_shared: 3,
-      positive_unique: 6,
-      negative_unique: 0
-    },
-    {
-      id: 'candidate_c',
-      name: 'מועמד ג',
-      shared_info: [
-        'מלא באנרגיה ויוזמה',
-        'שאפתן ומונע על ידי הצלחה',
-        'נחוש ואסרטיבי בקבלת החלטות',
-        'בעל יכולות אינטלקטואליות גבוהות',
-        'חסר רחמים ומוכן לפגוע באחרים למען מטרותיו',
-        'לא תמיד כן ונוטה להסתיר מידע'
-      ],
-      unique_info: {
-        group1: ['מסוגל לבטא את עצמו בצורה ברורה ומשכנעת', 'בעל ביטחון עצמי גבוה'],
-        group2: ['נתפס כמי שמחזיק בדעה חיובית מופרזת מדי על עצמו', 'נוקשה בדעותיו ולא תמיד פתוח לשמוע אחרים'],
-        group3: ['נוטה להחזיק בדעות קדומות כלפי אחרים', 'נוטה להתחמק מאחריות כשהדברים משתבשים']
-      },
-      positive_shared: 4,
-      negative_shared: 2,
-      positive_unique: 2,
-      negative_unique: 4
-    }
-  ];
 
   useEffect(() => {
     if (!sessionId) return;
@@ -349,57 +284,53 @@ const SessionAnalysis = () => {
               מבנה המידע לפי Stasser & Titus (1985)
             </h2>
             
+            <p className="text-sm text-gray-700 mb-4">
+              כל חבר/ת קבוצה ראו אותם 5 פריטי מידע משותפים על כל מועמד, ועוד פריט ייחודי אחד על כל מועמד.
+              3 הפריטים הייחודיים של כל מועמד חולקו בין חברי הקבוצה, פריט אחד לכל חבר/ה (בקבוצות של 4-5 חלק מהחברים קיבלו את אותו פריט ייחודי).
+            </p>
+
             <div className="mb-6 p-4 bg-white rounded-lg border-2 border-emerald-300">
-              <h3 className="text-xl font-bold mb-3 text-emerald-700">מועמד ב - המועמד האופטימלי!</h3>
-              <div className="grid md:grid-cols-3 gap-4 mb-4">
-                <div className="text-center p-3 bg-blue-50 rounded">
-                  <p className="text-sm font-semibold mb-1">מידע משותף</p>
-                  <p className="text-2xl font-bold text-blue-600">3+ / 3-</p>
-                  <p className="text-xs text-gray-600">נראה מאוזן</p>
+              <h3 className="text-xl font-bold mb-3 text-emerald-700">מועמד ב' (יואב לוי) - המועמד הטוב ביותר כשכל המידע משותף</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-3 bg-blue-50 rounded">
+                  <p className="text-sm font-semibold mb-1">מידע משותף: 4 יתרונות צנועים, חיסרון אחד</p>
+                  <p className="text-xs text-gray-700">קורות החיים שנראים החלשים ביותר: פחות ניסיון, פרויקטים קטנים יותר, ציון הערכה נמוך יותר, ופחות מוכר בתעשייה.</p>
                 </div>
-                <div className="text-center p-3 bg-green-50 rounded">
-                  <p className="text-sm font-semibold mb-1">מידע ייחודי</p>
-                  <p className="text-2xl font-bold text-green-600">6+ / 0-</p>
-                  <p className="text-xs text-gray-600">כל היתרונות מוסתרים!</p>
-                </div>
-                <div className="text-center p-3 bg-emerald-50 rounded">
-                  <p className="text-sm font-semibold mb-1">סה"כ</p>
-                  <p className="text-2xl font-bold text-emerald-600">9+ / 3-</p>
-                  <p className="text-xs text-gray-600">יחס 3:1 - הטוב ביותר</p>
+                <div className="p-3 bg-green-50 rounded">
+                  <p className="text-sm font-semibold mb-1">מידע ייחודי: יתרון משמעותי אחד, 2 חסרונות קלים</p>
+                  <p className="text-xs text-gray-700">מנהיגות אנשים יוצאת דופן (שימור עובדים של 95%, מתואר כ"מנהיג מעצים ואמפתי"); קשיי ניהול זמן בתחילת הקריירה ואסרטיביות מוגבלת בקונפליקטים הם חסרונות קלים שניתנים לתיקון.</p>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="p-4 bg-white rounded-lg border-2 border-blue-200">
-                <h3 className="text-lg font-bold mb-2 text-blue-700">מועמד א</h3>
+                <h3 className="text-lg font-bold mb-2 text-blue-700">מועמדת א' (רונית כהן)</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>מידע משותף:</strong> 4 חיובי, 2 שלילי</p>
-                  <p><strong>מידע ייחודי:</strong> 2 חיובי, 4 שלילי</p>
-                  <p className="font-semibold text-blue-600">סה"כ: 6 חיובי / 6 שלילי (יחס 1:1)</p>
+                  <p><strong>מידע משותף:</strong> 5 יתרונות, ללא חסרונות</p>
+                  <p><strong>מידע ייחודי:</strong> 3 חסרונות חמורים</p>
                 </div>
-                <p className="text-sm text-gray-700">נראה טוב במידע המשותף, אבל למעשה מאוזן</p>
+                <p className="text-sm text-gray-700">קורות חיים מרשימים, אבל המידע הנסתר מראה בעיות חמורות בניהול אנשים: עזיבה של 40% בצוותים, תלונות רשמיות על יחס משפיל לעובדים זוטרים, והתגוננות מול ביקורת.</p>
               </div>
-              
+
               <div className="p-4 bg-white rounded-lg border-2 border-purple-200">
-                <h3 className="text-lg font-bold mb-2 text-purple-700">מועמד ג</h3>
+                <h3 className="text-lg font-bold mb-2 text-purple-700">מועמדת ג' (דנה מזרחי)</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>מידע משותף:</strong> 4 חיובי, 2 שלילי</p>
-                  <p><strong>מידע ייחודי:</strong> 2 חיובי, 4 שלילי</p>
-                  <p className="font-semibold text-purple-600">סה"כ: 6 חיובי / 6 שלילי (יחס 1:1)</p>
+                  <p><strong>מידע משותף:</strong> 5 יתרונות, ללא חסרונות</p>
+                  <p><strong>מידע ייחודי:</strong> 3 חסרונות חמורים</p>
                 </div>
-                <p className="text-sm text-gray-700">גם הוא נראה טוב במידע המשותף, אבל גם מאוזן</p>
+                <p className="text-sm text-gray-700">המועמדת הוותיקה ביותר, אבל המידע הנסתר מראה ניהול נוקשה ושתלטני: התנגדות ל-Agile, דיווחים על מיקרומנג'מנט וחוסר אוטונומיה, וקושי להסתגל לעבודה היברידית.</p>
               </div>
             </div>
 
             <div className="p-4 bg-red-50 rounded-lg border-2 border-red-300">
               <h3 className="font-bold mb-2 text-red-800">ההטיה הקלאסית של Hidden Profile (Stasser & Titus, 1985):</h3>
               <ul className="text-sm space-y-2">
-                <li>• <strong>במידע המשותף:</strong> מועמדים א' וג' נראים טובים יותר (4 חיובי לעומת 3 של ב')</li>
-                <li>• <strong>במידע המלא:</strong> מועמד ב' אובייקטיבית הטוב ביותר (יחס 3:1 לעומת 1:1)</li>
-                <li>• <strong>הבעיה:</strong> כל 6 התכונות החיוביות של ב' נמצאות במידע הייחודי המפוזר בין הקבוצות</li>
+                <li>• <strong>במידע המשותף:</strong> מועמדות א' וג' נראות טובות בבירור (5 יתרונות וללא חסרונות כל אחת, לעומת יתרונות צנועים וחיסרון אחד של ב')</li>
+                <li>• <strong>במידע המלא:</strong> לא' ולג' יש בעיות חמורות בניהול אנשים, ואילו ב' הוא מנהיג אנשים יוצא דופן עם חסרונות קלים בלבד. בספירה פשוטה לכל השלושה יש 5 יתרונות ו-3 חסרונות - מה שמבדיל ביניהם הוא תוכן המידע הנסתר.</li>
+                <li>• <strong>הבעיה:</strong> המידע שמשנה את התמונה הוא ייחודי - כל פריט נמצא אצל חבר/ה אחד/ת בלבד בקבוצה</li>
                 <li>• <strong>התוצאה:</strong> קבוצות נוטות לדון במידע המשותף (discussion bias) ולכן מפספסות את היתרון של ב'</li>
-                <li>• <strong>המסקנה:</strong> רק שיתוף יסודי של כל המידע הייחודי יגלה שב' הוא הבחירה האופטימלית</li>
+                <li>• <strong>המסקנה:</strong> רק שיתוף יסודי של המידע הייחודי יגלה שב' הוא הבחירה הטובה ביותר</li>
               </ul>
             </div>
           </div>

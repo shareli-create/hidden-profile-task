@@ -8,6 +8,7 @@ import {
   submitDecision,
   submitGroupRatings
 } from '../firebase/database';
+import { candidates } from '../data/candidates';
 
 const SessionTask = () => {
   const { sessionId } = useParams();
@@ -32,57 +33,6 @@ const SessionTask = () => {
     navigate('/participant');
     return null;
   }
-
-  const candidates = [
-    {
-      id: 'candidate_a',
-      name: 'מועמדת א\' - רונית כהן',
-      shared_info: [
-        '12 שנות ניסיון בניהול פרויקטים',
-        'MBA ממכללה מוכרת',
-        'הובילה פרויקט שהניב הכנסה של 3 מיליון ₪',
-        'ציון ממוצע של 4.2/5 בהערכות ביצועים שנתיות',
-        'נוכחות מרשימה בכנסים מקצועיים'
-      ],
-      unique_info: {
-        member0: 'שיעור עזיבה גבוה (40%) בצוותים שניהלה בשנתיים האחרונות',
-        member1: 'התקבלו 3 תלונות רשמיות על יחס משפיל לעובדים זוטרים',
-        member2: 'מתקשה לקבל ביקורת, מגיבה בהתגוננות'
-      }
-    },
-    {
-      id: 'candidate_b',
-      name: 'מועמד ב\' - יואב לוי',
-      shared_info: [
-        '7 שנות ניסיון בניהול',
-        'תואר ראשון בהנדסת תעשייה וניהול',
-        'ניהל פרויקטים בתקציב של 500,000 - 1 מיליון ₪',
-        'ציון ממוצע של 3.8/5 בהערכות ביצועים',
-        'פחות ידוע בתעשייה, לא כתב מאמרים או נאומים'
-      ],
-      unique_info: {
-        member0: 'שיעור שימור עובדים יוצא דופן (95%) - הגבוה ביותר בכל החברה הקודמת, ועובדים מתארים אותו כ"מנהיג מעצים ואמפתי"',
-        member1: 'התקשה בתחילת הקריירה עם ניהול זמנים ועמידה בלוחות',
-        member2: 'נתפס כפחות אסרטיבי מדי במצבי קונפליקט'
-      }
-    },
-    {
-      id: 'candidate_c',
-      name: 'מועמדת ג\' - דנה מזרחי',
-      shared_info: [
-        '15 שנות ניסיון בתעשייה (הכי ותיקה)',
-        'תואר שני בניהול עסקים',
-        'פרסמה שני מאמרים בכתבי עת מקצועיים',
-        'ציון ממוצע של 4.0/5 בהערכות ביצועים',
-        'חברה בוועדות מקצועיות ארציות'
-      ],
-      unique_info: {
-        member0: 'נוטה לעבוד לפי שיטות מסורתיות, מתנגדת לשיטות Agile',
-        member1: 'צוותים שלה מדווחים על "מיקרומנג\'מנט" ו"חוסר אוטונומיה"',
-        member2: 'התקשתה להסתגל לעבודה היברידית לאחר הקורונה'
-      }
-    }
-  ];
 
   useEffect(() => {
     if (!sessionId) return;
@@ -223,18 +173,16 @@ const SessionTask = () => {
   };
 
   const submitRatings = async () => {
+    // A slider the group did not move still shows 5, so record it as 5.
     const allPieces = getAllGroupInfoPieces();
-    const missingRatings = allPieces.some(piece => !infoRatings[piece.id]);
-    
-    if (missingRatings) {
-      setError('נדרש לדרג את כל פיסות המידע');
-      return;
-    }
+    const finalRatings = Object.fromEntries(
+      allPieces.map(piece => [piece.id, infoRatings[piece.id] || 5])
+    );
 
     setLoading(true);
     try {
       await submitGroupRatings(sessionId, myGroup.id, {
-        ratings: infoRatings,
+        ratings: finalRatings,
         submittedBy: participantName
       });
       setCurrentStage('complete');
