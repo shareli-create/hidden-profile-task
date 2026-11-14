@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BarChart3, Download, Users, CheckCircle } from 'lucide-react';
 import { subscribeToSession } from '../firebase/database';
+import { candidates } from '../data/candidates';
 
 const SessionAnalysis = () => {
   const { sessionId } = useParams();
@@ -10,72 +11,6 @@ const SessionAnalysis = () => {
   const [groups, setGroups] = useState([]);
   const [sessionData, setSessionData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const candidates = [
-    {
-      id: 'candidate_a',
-      name: 'Candidate A',
-      shared_info: [
-        'Able to express himself clearly and persuasively',
-        'Highly self-confident',
-        'Determined and assertive in making decisions',
-        'Has high intellectual ability',
-        'Seen as having an overly high opinion of himself',
-        'Rigid in his views and not always open to others'
-      ],
-      unique_info: {
-        group1: ['Full of energy and initiative', 'Ambitious and driven by success'],
-        group2: ['Tends to hold prejudices toward others', 'Tends to avoid responsibility when things go wrong'],
-        group3: ['Not always honest and tends to hide information', 'Ruthless and willing to hurt others to reach his goals']
-      },
-      positive_shared: 4,
-      negative_shared: 2,
-      positive_unique: 2,
-      negative_unique: 4
-    },
-    {
-      id: 'candidate_b',
-      name: 'Candidate B',
-      shared_info: [
-        'Has high intellectual ability',
-        'Able to express himself clearly and persuasively',
-        'Highly self-confident',
-        'Rigid in his views and not always open to others',
-        'Seen as having an overly high opinion of himself',
-        'Tends to hold prejudices toward others'
-      ],
-      unique_info: {
-        group1: ['Responsible and takes full ownership of his actions', 'Honest and straightforward in communicating with others'],
-        group2: ['Fair and egalitarian in how he treats people', 'Trustworthy and keeps confidences'],
-        group3: ['Shows mature, balanced judgment', 'Consistent between what he says and what he does']
-      },
-      positive_shared: 3,
-      negative_shared: 3,
-      positive_unique: 6,
-      negative_unique: 0
-    },
-    {
-      id: 'candidate_c',
-      name: 'Candidate C',
-      shared_info: [
-        'Full of energy and initiative',
-        'Ambitious and driven by success',
-        'Determined and assertive in making decisions',
-        'Has high intellectual ability',
-        'Ruthless and willing to hurt others to reach his goals',
-        'Not always honest and tends to hide information'
-      ],
-      unique_info: {
-        group1: ['Able to express himself clearly and persuasively', 'Highly self-confident'],
-        group2: ['Seen as having an overly high opinion of himself', 'Rigid in his views and not always open to others'],
-        group3: ['Tends to hold prejudices toward others', 'Tends to avoid responsibility when things go wrong']
-      },
-      positive_shared: 4,
-      negative_shared: 2,
-      positive_unique: 2,
-      negative_unique: 4
-    }
-  ];
 
   useEffect(() => {
     if (!sessionId) return;
@@ -349,57 +284,53 @@ const SessionAnalysis = () => {
               Information Structure According to Stasser & Titus (1985)
             </h2>
             
+            <p className="text-sm text-gray-700 mb-4">
+              Every member saw the same 5 shared items about each candidate, plus 1 unique item about each candidate.
+              Each candidate's 3 unique items were split across the group, one per member (in groups of 4-5, some members received the same unique item).
+            </p>
+
             <div className="mb-6 p-4 bg-white rounded-lg border-2 border-emerald-300">
-              <h3 className="text-xl font-bold mb-3 text-emerald-700">Candidate B - the optimal candidate!</h3>
-              <div className="grid md:grid-cols-3 gap-4 mb-4">
-                <div className="text-center p-3 bg-blue-50 rounded">
-                  <p className="text-sm font-semibold mb-1">Shared information</p>
-                  <p className="text-2xl font-bold text-blue-600">3+ / 3-</p>
-                  <p className="text-xs text-gray-600">Looks balanced</p>
+              <h3 className="text-xl font-bold mb-3 text-emerald-700">Candidate B (Yoav Levi) - the best candidate once all information is pooled</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-3 bg-blue-50 rounded">
+                  <p className="text-sm font-semibold mb-1">Shared information: 4 modest strengths, 1 weakness</p>
+                  <p className="text-xs text-gray-700">The weakest-looking résumé: less experience, smaller projects, lower review score, not well known in the industry.</p>
                 </div>
-                <div className="text-center p-3 bg-green-50 rounded">
-                  <p className="text-sm font-semibold mb-1">Unique information</p>
-                  <p className="text-2xl font-bold text-green-600">6+ / 0-</p>
-                  <p className="text-xs text-gray-600">All the advantages are hidden!</p>
-                </div>
-                <div className="text-center p-3 bg-emerald-50 rounded">
-                  <p className="text-sm font-semibold mb-1">Total</p>
-                  <p className="text-2xl font-bold text-emerald-600">9+ / 3-</p>
-                  <p className="text-xs text-gray-600">3:1 ratio - the best</p>
+                <div className="p-3 bg-green-50 rounded">
+                  <p className="text-sm font-semibold mb-1">Unique information: 1 major strength, 2 minor weaknesses</p>
+                  <p className="text-xs text-gray-700">Exceptional people leadership (95% retention, described as "an empowering and empathetic leader"); early-career time management and limited assertiveness in conflict are minor and fixable.</p>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="p-4 bg-white rounded-lg border-2 border-blue-200">
-                <h3 className="text-lg font-bold mb-2 text-blue-700">Candidate A</h3>
+                <h3 className="text-lg font-bold mb-2 text-blue-700">Candidate A (Ronit Cohen)</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>Shared information:</strong> 4 positive, 2 negative</p>
-                  <p><strong>Unique information:</strong> 2 positive, 4 negative</p>
-                  <p className="font-semibold text-blue-600">Total: 6 positive / 6 negative (1:1 ratio)</p>
+                  <p><strong>Shared information:</strong> 5 strengths, no weaknesses</p>
+                  <p><strong>Unique information:</strong> 3 serious weaknesses</p>
                 </div>
-                <p className="text-sm text-gray-700">Looks good on the shared information, but is actually balanced</p>
+                <p className="text-sm text-gray-700">An impressive résumé, but the hidden items show serious problems leading people: 40% team turnover, formal complaints about demeaning treatment of junior staff, and defensiveness under criticism.</p>
               </div>
-              
+
               <div className="p-4 bg-white rounded-lg border-2 border-purple-200">
-                <h3 className="text-lg font-bold mb-2 text-purple-700">Candidate C</h3>
+                <h3 className="text-lg font-bold mb-2 text-purple-700">Candidate C (Dana Mizrahi)</h3>
                 <div className="text-sm space-y-1 mb-2">
-                  <p><strong>Shared information:</strong> 4 positive, 2 negative</p>
-                  <p><strong>Unique information:</strong> 2 positive, 4 negative</p>
-                  <p className="font-semibold text-purple-600">Total: 6 positive / 6 negative (1:1 ratio)</p>
+                  <p><strong>Shared information:</strong> 5 strengths, no weaknesses</p>
+                  <p><strong>Unique information:</strong> 3 serious weaknesses</p>
                 </div>
-                <p className="text-sm text-gray-700">Also looks good on the shared information, but is also balanced</p>
+                <p className="text-sm text-gray-700">The most senior candidate, but the hidden items show rigid, controlling management: opposes Agile, teams report micromanagement and lack of autonomy, and struggled to adapt to hybrid work.</p>
               </div>
             </div>
 
             <div className="p-4 bg-red-50 rounded-lg border-2 border-red-300">
               <h3 className="font-bold mb-2 text-red-800">The classic Hidden Profile bias (Stasser & Titus, 1985):</h3>
               <ul className="text-sm space-y-2">
-                <li>• <strong>On the shared information:</strong> candidates A and C look better (4 positive vs. 3 for B)</li>
-                <li>• <strong>On the full information:</strong> candidate B is objectively the best (3:1 ratio vs. 1:1)</li>
-                <li>• <strong>The problem:</strong> all 6 of B's positive traits are in the unique information spread across the group</li>
+                <li>• <strong>On the shared information:</strong> candidates A and C look clearly better (5 strengths and no weaknesses each, vs. modest strengths and a weakness for B)</li>
+                <li>• <strong>On the full information:</strong> A and C have serious problems leading people, while B is an exceptional people leader with only minor weaknesses. By simple count all three end up with 5 strengths and 3 weaknesses - what separates them is what the hidden items say.</li>
+                <li>• <strong>The problem:</strong> the information that changes the picture is unique - each piece is held by only one group member</li>
                 <li>• <strong>The result:</strong> groups tend to discuss the shared information (discussion bias) and so miss B's advantage</li>
-                <li>• <strong>The conclusion:</strong> only thorough sharing of all the unique information reveals that B is the optimal choice</li>
+                <li>• <strong>The conclusion:</strong> only thorough sharing of the unique information reveals that B is the best choice</li>
               </ul>
             </div>
           </div>
